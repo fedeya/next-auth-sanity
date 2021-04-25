@@ -4,7 +4,10 @@
   "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/Fedeya/next-auth-sanity.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fedeya/next-auth-sanity.git"
+  },
   "author": "Fedeya <elfedeminaya@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -25,5 +28,9 @@
   "dependencies": {
     "@sanity/client": "^2.8.0",
     "groq": "^2.2.6"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Fedeya/next-auth-sanity/issues"
+  },
+  "homepage": "https://github.com/Fedeya/next-auth-sanity#readme"
 }
