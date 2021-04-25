@@ -16,6 +16,7 @@
 
 - Saving users and account in Sanity
 - Retrieving of full linked provider information for a user
+- Cache User
 
 ### Database sessions
 
