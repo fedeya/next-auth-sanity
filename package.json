@@ -1,7 +1,7 @@
 {
   "name": "next-auth-sanity",
   "description": "Next Auth Adapter for Sanity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/Fedeya/next-auth-sanity.git",
