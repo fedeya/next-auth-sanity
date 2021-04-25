@@ -5,11 +5,17 @@ import {
   getUserByProviderAccountIdQuery,
   getUserByEmailQuery
 } from './queries';
+import LRU from 'lru-cache';
 import { SanityClient } from '@sanity/client';
 
 type Options = {
   client: SanityClient;
 };
+
+const userCache = new LRU<string, User & { id: string }>({
+  maxAge: 24 * 60 * 60 * 1000,
+  max: 1000
+});
 
 export const SanityAdapter = ({ client }: Options) => {
   const getAdapter = async () => {
@@ -21,6 +27,11 @@ export const SanityAdapter = ({ client }: Options) => {
         image: profile.image
       });
 
+      userCache.set(user._id, {
+        id: user._id,
+        ...user
+      });
+
       return {
         id: user._id,
         ...user
@@ -28,6 +39,23 @@ export const SanityAdapter = ({ client }: Options) => {
     }
 
     async function getUser(id: string): Promise<User> {
+      const cachedUser = userCache.get(id);
+
+      if (cachedUser) {
+        (async () => {
+          const user = await client.fetch(getUserByIdQuery, {
+            id
+          });
+
+          userCache.set(user._id, {
+            id: user._id,
+            ...user
+          });
+        })();
+
+        return cachedUser;
+      }
+
       const user = await client.fetch(getUserByIdQuery, {
         id
       });
@@ -102,7 +130,9 @@ export const SanityAdapter = ({ client }: Options) => {
     async function updateUser(user: User & { id: string }): Promise<User> {
       const { id, name, email, image } = user;
 
-      return await client
+      userCache.set(id, user);
+
+      const newUser = await client
         .patch(id)
         .set({
           name,
@@ -110,6 +140,11 @@ export const SanityAdapter = ({ client }: Options) => {
           image
         })
         .commit();
+
+      return {
+        id: newUser._id,
+        ...newUser
+      };
     }
 
     return {

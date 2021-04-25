@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> Next Auth Adapter for Sanity
+> NextAuth Adapter for Sanity
 
 ## Overview
 
