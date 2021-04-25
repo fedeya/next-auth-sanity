@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SanityAdapter } from 'next-auth-sanity';
+import { SanityAdapter, SanityCredentials } from '../../../../../../dist';
 import { client } from '../../../libs/sanity';
 
 const options: NextAuthOptions = {
@@ -9,7 +9,8 @@ const options: NextAuthOptions = {
     Providers.GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
-    })
+    }),
+    SanityCredentials({ client })
   ],
   session: {
     jwt: true

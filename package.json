@@ -1,7 +1,7 @@
 {
   "name": "next-auth-sanity",
   "description": "NextAuth Adapter for Sanity",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@sanity/client": "^2.8.0",
+    "argon2": "^0.27.2",
+    "axios": "^0.21.1",
     "groq": "^2.2.6",
     "lru-cache": "^6.0.0"
   },
