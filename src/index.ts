@@ -14,16 +14,12 @@ type Options = {
 export const SanityAdapter = ({ client }: Options) => {
   const getAdapter = async () => {
     async function createUser(profile: Profile): Promise<User> {
-      console.log(profile);
-
       const user = await client.create({
         _type: 'user',
         email: profile.email,
         name: profile.name,
         image: profile.image
       });
-
-      console.log(user);
 
       return {
         id: user._id,
@@ -35,8 +31,6 @@ export const SanityAdapter = ({ client }: Options) => {
       const user = await client.fetch(getUserByIdQuery, {
         id
       });
-
-      console.log(id, user);
 
       return {
         id: user._id,
