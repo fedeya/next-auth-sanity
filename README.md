@@ -16,11 +16,23 @@
 
 - Saving users and account in Sanity
 - Retrieving of full linked provider information for a user
-- Cache User
+- Stale While Revalidate
 
 ### Database sessions
 
 Database sessions are not implemented, this adapter relies on usage of JSON Web Tokens for stateless session management.
+
+### Recommendations
+
+you must make the dataset private otherwise the data of your users will be public for everyone
+
+```sh
+sanity dataset visibility set <datasetName> private
+```
+
+## Requirements
+
+- Sanity Token for Read+Write
 
 ## Installation
 
@@ -37,6 +49,8 @@ npm i next-auth-sanity
 ```
 
 ## Usage
+
+[Full Example](https://github.com/Fedeya/next-auth-sanity/tree/main/examples/full-example)
 
 ```ts
 import NextAuth, { NextAuthOptions } from 'next-auth';
