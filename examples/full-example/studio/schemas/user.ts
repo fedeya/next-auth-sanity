@@ -19,6 +19,11 @@ export default <Document>{
       name: 'image',
       title: 'Image',
       type: 'url'
+    },
+    {
+      name: 'password',
+      type: 'string',
+      hidden: true
     }
   ]
 };

@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> NextAuth Adapter for Sanity
+> NextAuth Adapter and Provider for Sanity
 
 ## Overview
 
@@ -17,6 +17,8 @@
 - Saving users and account in Sanity
 - Retrieving of full linked provider information for a user
 - Stale While Revalidate
+- Auth with Credentials
+- Hash Credentials Passwords with Argon2
 
 ### Database sessions
 
@@ -56,13 +58,16 @@ npm i next-auth-sanity
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SanityAdapter } from 'next-auth-sanity';
-import { client } from '/your/sanity/client';
+import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
+import { client } from 'your/sanity/client';
 
 const options: NextAuthOptions = {
   providers: [
-    clientId: process.env.GITHUB_CLIENT_ID!,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    Providers.GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET
+    }),
+    SanityCredentials({ client }) // only if you use sign in with credentials
   ],
   session: {
     jwt: true
@@ -98,6 +103,12 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'url'
+    },
+    {
+      // this is only if you use credentials provider
+      name: 'password',
+      type: 'string',
+      hidden: true
     }
   ]
 };
@@ -143,6 +154,42 @@ export default {
     }
   ]
 };
+```
+
+### Sign Up and Sign In With Credentials
+
+### Setup
+
+`API Route`
+
+```ts
+// pages/api/sanity/signUp.ts
+
+import { signUpHandler } from 'next-auth-sanity';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { client } from 'your/sanity/client';
+
+export default (req: NextApiRequest, res: NextApiResponse) =>
+  signUpHandler({ req, res, client });
+```
+
+`Client`
+
+```ts
+import { signUp } from 'next-auth-sanity/client';
+import { signIn } from 'next-auth/client';
+
+const user = await signUp({
+  email,
+  password,
+  name
+});
+
+await signIn('credentials', {
+  redirect: false,
+  email,
+  password
+});
 ```
 
 ## Author
