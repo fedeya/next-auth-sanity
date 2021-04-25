@@ -2,11 +2,16 @@
   "name": "next-auth-sanity",
   "description": "Next Auth Adapter for Sanity",
   "version": "1.0.1",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/Fedeya/next-auth-sanity.git",
   "author": "Fedeya <elfedeminaya@gmail.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc"
+  },
   "devDependencies": {
     "@types/next-auth": "^3.15.0",
     "@types/node": "^14.14.41",
