@@ -8,6 +8,11 @@
   "author": "Fedeya <elfedeminaya@gmail.com>",
   "license": "MIT",
   "private": false,
+  "keywords": [
+    "next-auth",
+    "sanity",
+    "next-auth-sanity"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublish": "tsc"
