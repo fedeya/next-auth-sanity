@@ -7,6 +7,8 @@ import {
 } from './queries';
 import LRU from 'lru-cache';
 import { SanityClient } from '@sanity/client';
+import {uuid} from '@sanity/uuid'
+
 
 type Options = {
   client: SanityClient;
@@ -21,6 +23,7 @@ export const SanityAdapter = ({ client }: Options) => {
   const getAdapter = async () => {
     async function createUser(profile: Profile): Promise<User> {
       const user = await client.create({
+        _id: `user.${uuid()}`,
         _type: 'user',
         email: profile.email,
         name: profile.name,
