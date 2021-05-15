@@ -24,13 +24,9 @@
 
 Database sessions are not implemented, this adapter relies on usage of JSON Web Tokens for stateless session management.
 
-### Recommendations
+### Privacy and user information
 
-you must make the dataset private otherwise the data of your users will be public for everyone
-
-```sh
-sanity dataset visibility set <datasetName> private
-```
+Storing people's user credentials is always a big responsibility. Make sure you understand the risks and inform your users accordingly. This adapter store the user information with [the `_id` on the `user.` path](https://www.sanity.io/docs/ids#fdc25ada5db2). In other words, these documents can't be queried without authentication, even if your dataset is set to be public. That also means that these documents are available for everyone that's part of your Sanity project.
 
 ## Requirements
 
