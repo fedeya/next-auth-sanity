@@ -3,7 +3,7 @@ import { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
 import argon2 from 'argon2';
 import { IncomingMessage, ServerResponse } from 'node:http';
-
+import {uuid} from '@sanity/uuid'
 interface Options {
   client: SanityClient;
 }
@@ -31,6 +31,7 @@ export const signUpHandler = async ({ req, client, res }: Handler) => {
   }
 
   const newUser = await client.create({
+    _id: `user.${uuid()}`,
     _type: 'user',
     email,
     password: await argon2.hash(password),
