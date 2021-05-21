@@ -7,8 +7,7 @@ import {
 } from './queries';
 import LRU from 'lru-cache';
 import { SanityClient } from '@sanity/client';
-import {uuid} from '@sanity/uuid'
-
+import { uuid } from '@sanity/uuid';
 
 type Options = {
   client: SanityClient;

@@ -3,7 +3,7 @@ import { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
 import argon2 from 'argon2';
 import { IncomingMessage, ServerResponse } from 'node:http';
-import {uuid} from '@sanity/uuid'
+import { uuid } from '@sanity/uuid';
 interface Options {
   client: SanityClient;
 }
