@@ -2,16 +2,9 @@ import Providers, { CredentialsProvider } from 'next-auth/providers';
 import { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
 import argon2 from 'argon2';
-import { IncomingMessage, ServerResponse } from 'node:http';
 import { uuid } from '@sanity/uuid';
 
 type CredentialsConfig = ReturnType<CredentialsProvider>;
-export interface Handler {
-  req: IncomingMessage & { body: any };
-  res: ServerResponse & {
-    json: (body: any) => void;
-  };
-}
 
 export const signUpHandler =
   (client: SanityClient) => async (req: any, res: any) => {
