@@ -15,8 +15,8 @@
 ### Features
 
 - Saving users and account in Sanity
+- Email Provider Support
 - Retrieving of full linked provider information for a user
-- Stale While Revalidate
 - Auth with Credentials
 - Hash Credentials Passwords with Argon2
 
@@ -63,12 +63,12 @@ const options: NextAuthOptions = {
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
-    SanityCredentials({ client }) // only if you use sign in with credentials
+    SanityCredentials(client) // only if you use sign in with credentials
   ],
   session: {
     jwt: true
   },
-  adapter: SanityAdapter({ client })
+  adapter: SanityAdapter(client)
 };
 
 export default (req: NextApiRequest, res: NextApiResponse) =>
@@ -77,8 +77,24 @@ export default (req: NextApiRequest, res: NextApiResponse) =>
 
 ### Sanity Schemas
 
+you can install this package in your studio project and use the schemas like this
+
 ```ts
-// user
+import createSchema from 'part:@sanity/base/schema-creator';
+
+import schemaTypes from 'all:part:@sanity/base/schema-type';
+import { user, account, verificationRequest } from 'next-auth-sanity/schemas';
+
+export default createSchema({
+  name: 'default',
+  types: schemaTypes.concat([user, account, verificationRequest])
+});
+```
+
+or copy paste the schemas
+
+```ts
+// user - required
 
 export default {
   name: 'user',
@@ -111,7 +127,7 @@ export default {
 ```
 
 ```ts
-// account
+// account - required
 
 export default {
   name: 'account',
@@ -152,6 +168,33 @@ export default {
 };
 ```
 
+```ts
+// verification-request - only if you use email provider
+
+export default {
+  name: 'verification-request',
+  title: 'Verification Request',
+  type: 'document',
+  fields: [
+    {
+      name: 'identifier',
+      title: 'Identifier',
+      type: 'string'
+    },
+    {
+      name: 'token',
+      title: 'Token',
+      type: 'string'
+    },
+    {
+      name: 'expires',
+      title: 'Expires',
+      type: 'date'
+    }
+  ]
+};
+```
+
 ### Sign Up and Sign In With Credentials
 
 ### Setup
@@ -160,13 +203,10 @@ export default {
 
 ```ts
 // pages/api/sanity/signUp.ts
-
 import { signUpHandler } from 'next-auth-sanity';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { client } from 'your/sanity/client';
 
-export default (req: NextApiRequest, res: NextApiResponse) =>
-  signUpHandler({ req, res, client });
+export default signUpHandler(client);
 ```
 
 `Client`
