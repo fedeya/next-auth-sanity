@@ -176,7 +176,7 @@ export const SanityAdapter: Adapter<
 
           const checkToken = await argon2.verify(
             verificationRequest.token,
-            token
+            `${token}${secret}`
           );
 
           if (!checkToken) return;
@@ -196,7 +196,7 @@ export const SanityAdapter: Adapter<
 
           const checkToken = await argon2.verify(
             verificationRequest.token,
-            token
+            `${token}${secret}`
           );
 
           if (!checkToken) return null;
