@@ -4,51 +4,48 @@ import { getUserByEmailQuery } from './queries';
 import argon2 from 'argon2';
 import { IncomingMessage, ServerResponse } from 'node:http';
 import { uuid } from '@sanity/uuid';
-interface Options {
-  client: SanityClient;
-}
 
 type CredentialsConfig = ReturnType<CredentialsProvider>;
-
 export interface Handler {
   req: IncomingMessage & { body: any };
   res: ServerResponse & {
     json: (body: any) => void;
   };
-  client: SanityClient;
 }
 
-export const signUpHandler = async ({ req, client, res }: Handler) => {
-  const { email, password, name, image } = req.body;
+export const signUpHandler =
+  (client: SanityClient) => async (req: any, res: any) => {
+    const { email, password, name, image } = req.body;
 
-  const user = await client.fetch(getUserByEmailQuery, {
-    email
-  });
+    const user = await client.fetch(getUserByEmailQuery, {
+      email
+    });
 
-  if (user) {
-    res.json({ error: 'User already exist' });
-    return;
-  }
+    if (user) {
+      res.json({ error: 'User already exist' });
+      return;
+    }
 
-  const newUser = await client.create({
-    _id: `user.${uuid()}`,
-    _type: 'user',
-    email,
-    password: await argon2.hash(password),
-    name,
-    image
-  });
+    const newUser = await client.create({
+      _id: `user.${uuid()}`,
+      _type: 'user',
+      email,
+      password: await argon2.hash(password),
+      name,
+      image
+    });
 
-  res.json({
-    email: newUser.email,
-    name: newUser.name,
-    image: newUser.image
-  });
-};
+    res.json({
+      email: newUser.email,
+      name: newUser.name,
+      image: newUser.image
+    });
+  };
 
-export const SanityCredentials = ({ client }: Options): CredentialsConfig =>
+export const SanityCredentials = (client: SanityClient): CredentialsConfig =>
   Providers.Credentials({
     credentials: {
+      id: 'sanity-login',
       name: 'Credentials',
       email: {
         label: 'Email',
@@ -59,14 +56,14 @@ export const SanityCredentials = ({ client }: Options): CredentialsConfig =>
         type: 'password'
       }
     },
-    async authorize({ email, password }: { email: string; password: string }) {
+    async authorize(credentials: any) {
       const user = await client.fetch(getUserByEmailQuery, {
-        email
+        email: credentials.email
       });
 
       if (!user) throw new Error('Email does not exist');
 
-      if (await argon2.verify(user.password, password)) {
+      if (await argon2.verify(user.password, credentials.password)) {
         return {
           email: user.email,
           name: user.name,

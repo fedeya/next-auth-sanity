@@ -10,12 +10,12 @@ const options: NextAuthOptions = {
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
-    SanityCredentials({ client })
+    SanityCredentials(client)
   ],
   session: {
     jwt: true
   },
-  adapter: SanityAdapter({ client })
+  adapter: SanityAdapter(client)
 };
 
 export default (req: NextApiRequest, res: NextApiResponse) =>
