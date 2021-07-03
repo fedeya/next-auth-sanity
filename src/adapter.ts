@@ -48,6 +48,8 @@ export const SanityAdapter: Adapter<
             id
           });
 
+          if (!user) return null;
+
           return {
             id: user._id,
             ...user
@@ -84,6 +86,8 @@ export const SanityAdapter: Adapter<
             providerAccountId: String(providerAccountId)
           });
 
+          if (!account) return null;
+
           return {
             id: account?.user._id,
             ...account?.user
@@ -96,6 +100,8 @@ export const SanityAdapter: Adapter<
           const user = await client.fetch(getUserByEmailQuery, {
             email
           });
+
+          if (!user) return null;
 
           return {
             id: user._id,
