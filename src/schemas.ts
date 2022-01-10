@@ -64,9 +64,9 @@ export const account = {
   ]
 };
 
-export const verificationRequest = {
-  name: 'verification-request',
-  title: 'Verification Request',
+export const verificationToken = {
+  name: 'verification-token',
+  title: 'Verification Token',
   type: 'document',
   fields: [
     {

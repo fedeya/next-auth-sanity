@@ -1,11 +1,11 @@
 import groq from 'groq';
 
 export const getUserByIdQuery = groq`
-  *[_type == 'user' && _id == $id][0]
+  *[_type == $userSchema && _id == $id][0]
 `;
 
 export const getUserByProviderAccountIdQuery = groq`
-  *[_type == 'account' && providerId == $providerId && providerAccountId == $providerAccountId] {
+  *[_type == $accountSchema && providerId == $providerId && providerAccountId == $providerAccountId] {
     accessToken,
     accessTokenExpires,
     providerId,
@@ -16,9 +16,9 @@ export const getUserByProviderAccountIdQuery = groq`
 `;
 
 export const getUserByEmailQuery = groq`
-  *[_type == 'user' && email == $email][0]
+  *[_type == $userSchema && email == $email][0]
 `;
 
-export const getVerificationRequestQuery = groq`
-  *[_type == 'verification-request' && identifier == $identifier][0]
+export const getVerificationTokenQuery = groq`
+  *[_type == $verificationTokenSchema && identifier == $identifier && token == $token][0]
 `;

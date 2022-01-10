@@ -1,8 +1,8 @@
 import { Document } from './schemaTypes';
 
 export default <Document>{
-  name: 'verification-request',
-  title: 'Verification Request',
+  name: 'verification-token',
+  title: 'Verification Token',
   type: 'document',
   fields: [
     {

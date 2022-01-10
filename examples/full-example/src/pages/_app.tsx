@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { AppProps } from 'next/app';
-import { Provider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => (
-  <Provider session={pageProps.session}>
+  <SessionProvider session={pageProps.session}>
     <Component {...pageProps} />
-  </Provider>
+  </SessionProvider>
 );
 
 export default MyApp;

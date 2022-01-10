@@ -1,15 +1,15 @@
 import { FC } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const Home: FC = () => {
-  const [session, loading] = useSession();
+  const { data, status } = useSession();
 
-  if (loading) return <p>Loading...</p>;
+  if (status === 'loading') return <p>Loading...</p>;
 
-  if (session) {
+  if (data) {
     return (
       <div>
-        <p>User: {session.user.name}</p>
+        <p>User: {data.user.name}</p>
         <button onClick={() => signOut({ redirect: false })}>Sign Out</button>
       </div>
     );

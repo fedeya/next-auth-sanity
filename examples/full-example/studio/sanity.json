@@ -4,8 +4,8 @@
     "name": "next-auth-sanity"
   },
   "api": {
-    "projectId": "placeholder",
-    "dataset": "placeholder"
+    "projectId": "n1qoind7",
+    "dataset": "production"
   },
   "plugins": [
     "@sanity/base",

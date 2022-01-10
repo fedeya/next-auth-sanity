@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { useSession, signOut, signIn } from 'next-auth/react';
 import { signUp } from '../../../../dist/client';
 
 const Credentials: FC = () => {
   const [email, setEmail] = useState('');
-  const [session, loading] = useSession();
+  const { data, status } = useSession();
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
@@ -18,9 +18,8 @@ const Credentials: FC = () => {
     });
 
     await signIn('credentials', {
-      redirect: false,
-      email,
-      password
+      redirect: true,
+      email
     });
 
     console.log(user);
@@ -28,6 +27,7 @@ const Credentials: FC = () => {
 
   const handleSubmitSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+
     await signIn('credentials', {
       redirect: false,
       email,
@@ -35,11 +35,16 @@ const Credentials: FC = () => {
     });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (status === 'loading') return <p>Loading...</p>;
 
   return (
     <div>
-      <p>User: {session?.user.name}</p>
+      {data && (
+        <div>
+          <p>User: {data?.user.name}</p>
+          <button onClick={() => signOut({ redirect: false })}>Sign Out</button>
+        </div>
+      )}
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <input
