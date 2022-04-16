@@ -15,13 +15,7 @@ const options: NextAuthOptions = {
     strategy: 'jwt'
   },
   secret: 'any-secret-word',
-  adapter: SanityAdapter(client, {
-    schemas: {
-      verificationToken: 'verificationToken',
-      account: 'account',
-      user: 'user'
-    }
-  })
+  adapter: SanityAdapter(client)
 };
 
 export default NextAuth(options);
