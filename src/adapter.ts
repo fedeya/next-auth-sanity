@@ -1,218 +1,168 @@
-import { Profile, Session } from 'next-auth';
-import { Adapter } from 'next-auth/adapters';
-import { User } from 'next-auth';
+import type { Adapter, AdapterUser } from 'next-auth/adapters';
 import {
   getUserByIdQuery,
   getUserByProviderAccountIdQuery,
   getUserByEmailQuery,
-  getVerificationRequestQuery
+  getVerificationTokenQuery
 } from './queries';
-import { SanityClient } from '@sanity/client';
+import type { SanityClient } from '@sanity/client';
 import { uuid } from '@sanity/uuid';
-import argon2 from 'argon2';
 
-export const SanityAdapter: Adapter<
-  SanityClient,
-  never,
-  User & { id: string },
-  Profile,
-  Session
-> = client => {
+export function SanityAdapter(
+  client: SanityClient,
+  options = {
+    schemas: {
+      account: 'account',
+      verificationToken: 'verification-token',
+      user: 'user'
+    }
+  }
+): Adapter {
   return {
-    async getAdapter({ secret, logger, ...appOptions }) {
-      if (!appOptions.jwt) {
-        logger.warn('this adapter only work with jwt');
-      }
-
-      const hashToken = (token: string) => argon2.hash(`${token}${secret}`);
+    async createUser(profile) {
+      const user = await client.create({
+        _id: `user.${uuid()}`,
+        _type: options.schemas.user,
+        email: profile.email,
+        name: profile.name,
+        image: profile.image
+      });
 
       return {
-        displayName: 'Sanity',
-        async createUser(profile) {
-          const user = await client.create({
-            _id: `user.${uuid()}`,
-            _type: 'user',
-            email: profile.email,
-            name: profile.name,
-            image: profile.image
-          });
+        id: user._id,
+        emailVerified: null,
+        email: user.email,
+        name: user.name,
+        image: user.image
+      } as AdapterUser;
+    },
 
-          return {
-            id: user._id,
-            ...user
-          };
-        },
+    async getUser(id) {
+      const user = await client.fetch(getUserByIdQuery, {
+        userSchema: options.schemas.user,
+        id
+      });
 
-        async getUser(id) {
-          const user = await client.fetch(getUserByIdQuery, {
-            id
-          });
+      if (!user) return null;
 
-          if (!user) return null;
+      return {
+        id: user._id,
+        ...user
+      };
+    },
 
-          return {
-            id: user._id,
-            ...user
-          };
-        },
-
-        async linkAccount(
-          userId,
-          providerId,
-          providerType,
-          providerAccountId,
-          refreshToken,
-          accessToken,
-          accessTokenExpires
-        ) {
-          await client.create({
-            _type: 'account',
-            providerId,
-            providerType,
-            providerAccountId: `${providerAccountId}`,
-            refreshToken,
-            accessToken,
-            accessTokenExpires,
-            user: {
-              _type: 'reference',
-              _ref: userId
-            }
-          });
-        },
-
-        async getUserByProviderAccountId(providerId, providerAccountId) {
-          const account = await client.fetch(getUserByProviderAccountIdQuery, {
-            providerId,
-            providerAccountId: String(providerAccountId)
-          });
-
-          if (!account) return null;
-
-          return {
-            id: account?.user._id,
-            ...account?.user
-          };
-        },
-
-        async getUserByEmail(email: string) {
-          if (!email) return null;
-
-          const user = await client.fetch(getUserByEmailQuery, {
-            email
-          });
-
-          if (!user) return null;
-
-          return {
-            id: user._id,
-            ...user
-          };
-        },
-
-        async createSession() {
-          logger.warn('[createSession] method not implemented');
-
-          return {} as any;
-        },
-
-        async getSession() {
-          logger.warn('[getSession] method not implemented');
-          return {} as any;
-        },
-
-        async updateSession() {
-          logger.warn('[updateSession] method not implemented');
-          return {} as any;
-        },
-
-        async deleteSession() {
-          logger.warn('[deleteSession] method not implemented');
-        },
-
-        async updateUser(user) {
-          const { id, name, email, image } = user;
-
-          const newUser = await client
-            .patch(id)
-            .set({
-              name,
-              email,
-              image
-            })
-            .commit();
-
-          return {
-            id: newUser._id,
-            ...newUser
-          };
-        },
-
-        async createVerificationRequest(identifier, url, token, _, provider) {
-          await client.create({
-            _type: 'verification-request',
-            identifier,
-            token: await hashToken(token),
-            expires: new Date(Date.now() + provider.maxAge * 1000)
-          });
-
-          await provider.sendVerificationRequest({
-            identifier,
-            token,
-            url,
-            baseUrl: appOptions.baseUrl,
-            provider
-          });
-        },
-
-        async deleteVerificationRequest(identifier, token) {
-          const verificationRequest = await client.fetch(
-            getVerificationRequestQuery,
-            {
-              identifier
-            }
-          );
-
-          if (!verificationRequest) return;
-
-          const checkToken = await argon2.verify(
-            verificationRequest.token,
-            `${token}${secret}`
-          );
-
-          if (!checkToken) return;
-
-          await client.delete(verificationRequest._id);
-        },
-
-        async getVerificationRequest(identifier, token) {
-          const verificationRequest = await client.fetch(
-            getVerificationRequestQuery,
-            {
-              identifier
-            }
-          );
-
-          if (!verificationRequest) return null;
-
-          const checkToken = await argon2.verify(
-            verificationRequest.token,
-            `${token}${secret}`
-          );
-
-          if (!checkToken) return null;
-
-          if (verificationRequest.expires < new Date()) {
-            await client.delete(verificationRequest._id);
-
-            return null;
-          }
-
-          return {
-            id: verificationRequest._id,
-            ...verificationRequest
-          };
+    async linkAccount({
+      provider,
+      providerAccountId,
+      refresh_token,
+      access_token,
+      expires_at,
+      userId,
+      type
+    }) {
+      await client.create({
+        _type: options.schemas.account,
+        providerId: provider,
+        providerType: type,
+        providerAccountId: `${providerAccountId}`,
+        refreshToken: refresh_token,
+        accessToken: access_token,
+        accessTokenExpires: expires_at,
+        user: {
+          _type: 'reference',
+          _ref: userId
         }
+      });
+    },
+
+    async createSession() {
+      return {} as any;
+    },
+
+    async updateSession() {
+      return {} as any;
+    },
+
+    async deleteSession() {},
+
+    async updateUser(user) {
+      const { id, name, email, image } = user;
+
+      const newUser = await client
+        .patch(id!)
+        .set({
+          name,
+          email,
+          image
+        })
+        .commit();
+
+      return {
+        id: newUser._id,
+        ...newUser,
+        emailVerified: null
+      } as AdapterUser;
+    },
+
+    async getUserByEmail(email) {
+      const user = await client.fetch(getUserByEmailQuery, {
+        userSchema: options.schemas.user,
+        email
+      });
+
+      if (!user) return null;
+
+      return {
+        id: user._id,
+        ...user
+      };
+    },
+
+    async getUserByAccount({ provider, providerAccountId }) {
+      const account = await client.fetch(getUserByProviderAccountIdQuery, {
+        accountSchema: options.schemas.account,
+        providerId: provider,
+        providerAccountId
+      });
+
+      if (!account) return null;
+
+      return {
+        id: account.user._id,
+        emailVerified: null,
+        ...account.user
+      };
+    },
+    async getSessionAndUser() {
+      return {} as any;
+    },
+
+    async createVerificationToken({ identifier, token, expires }) {
+      const verificationToken = await client.create({
+        _type: options.schemas.verificationToken,
+        identifier,
+        token,
+        expires
+      });
+
+      return verificationToken;
+    },
+
+    async useVerificationToken({ identifier, token }) {
+      const verificationToken = await client.fetch(getVerificationTokenQuery, {
+        verificationTokenSchema: options.schemas.verificationToken,
+        identifier,
+        token
+      });
+
+      if (!verificationToken) return null;
+
+      await client.delete(verificationToken._id);
+
+      return {
+        id: verificationToken._id,
+        ...verificationToken
       };
     }
   };
-};
+}

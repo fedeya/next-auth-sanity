@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@types/lru-cache": "^5.1.0",
-    "@types/next-auth": "^3.15.0",
     "@types/node": "^14.14.41",
     "typescript": "^4.2.4"
   },
@@ -32,7 +31,8 @@
     "@sanity/uuid": "^3.0.1",
     "argon2": "^0.27.2",
     "axios": "^0.21.1",
-    "groq": "^2.2.6"
+    "groq": "^2.2.6",
+    "next-auth": "^4.3.2"
   },
   "bugs": {
     "url": "https://github.com/Fedeya/next-auth-sanity/issues"
