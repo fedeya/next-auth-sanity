@@ -52,27 +52,26 @@ npm i next-auth-sanity
 
 ```ts
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import Providers from 'next-auth/providers';
+import GitHub from 'next-auth/providers/github';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
 import { client } from 'your/sanity/client';
 
 const options: NextAuthOptions = {
   providers: [
-    Providers.GitHub({
+    GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
     SanityCredentials(client) // only if you use sign in with credentials
   ],
   session: {
-    jwt: true
+    strategy: 'jwt'
   },
   adapter: SanityAdapter(client)
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) =>
-  NextAuth(req, res, options);
+export default NextAuth(options);
 ```
 
 ### Sanity Schemas
@@ -83,11 +82,11 @@ you can install this package in your studio project and use the schemas like thi
 import createSchema from 'part:@sanity/base/schema-creator';
 
 import schemaTypes from 'all:part:@sanity/base/schema-type';
-import { user, account, verificationRequest } from 'next-auth-sanity/schemas';
+import { user, account, verificationToken } from 'next-auth-sanity/schemas';
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([user, account, verificationRequest])
+  types: schemaTypes.concat([user, account, verificationToken])
 });
 ```
 
@@ -169,11 +168,11 @@ export default {
 ```
 
 ```ts
-// verification-request - only if you use email provider
+// verification-token - only if you use email provider
 
 export default {
-  name: 'verification-request',
-  title: 'Verification Request',
+  name: 'verification-token',
+  title: 'Verification Token',
   type: 'document',
   fields: [
     {
@@ -221,11 +220,31 @@ const user = await signUp({
   name
 });
 
-await signIn('credentials', {
+await signIn('sanity-login', {
   redirect: false,
   email,
   password
 });
+```
+
+## Custom Schemas
+if you want to use another schema or upgrade from previous version you can change the default schema used in the library, to do so you can pass a second argument to all methods with config
+```ts
+SanityAdapter(client, {
+  schemas: {
+    verificationToken: 'verification-request',
+    account: 'account',
+    user: 'profile'
+  }
+})
+
+
+// the second argument is the name of the user schema
+// default: 'user'
+
+SanityCredentials(client, 'profile');
+
+signUpHandler(client, 'profile');
 ```
 
 ## Author

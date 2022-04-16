@@ -1,11 +1,11 @@
-import { Adapter, AdapterUser } from 'next-auth/adapters';
+import type { Adapter, AdapterUser } from 'next-auth/adapters';
 import {
   getUserByIdQuery,
   getUserByProviderAccountIdQuery,
   getUserByEmailQuery,
   getVerificationTokenQuery
 } from './queries';
-import { SanityClient } from '@sanity/client';
+import type { SanityClient } from '@sanity/client';
 import { uuid } from '@sanity/uuid';
 
 export function SanityAdapter(

@@ -17,18 +17,16 @@ const Credentials: FC = () => {
       name
     });
 
-    await signIn('credentials', {
-      redirect: true,
+    await signIn('sanity-login', {
+      redirect: false,
       email
     });
-
-    console.log(user);
   };
 
   const handleSubmitSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await signIn('credentials', {
+    await signIn('sanity-login', {
       redirect: false,
       email,
       password

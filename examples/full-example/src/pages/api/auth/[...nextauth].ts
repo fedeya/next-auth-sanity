@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GitHub from 'next-auth/providers/github';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { SanityAdapter, SanityCredentials } from '../../../../../../dist';
 import { client } from '../../../libs/sanity';
 
@@ -16,7 +15,13 @@ const options: NextAuthOptions = {
     strategy: 'jwt'
   },
   secret: 'any-secret-word',
-  adapter: SanityAdapter(client)
+  adapter: SanityAdapter(client, {
+    schemas: {
+      verificationToken: 'verificationToken',
+      account: 'account',
+      user: 'user'
+    }
+  })
 };
 
 export default NextAuth(options);
