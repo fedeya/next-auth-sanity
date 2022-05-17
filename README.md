@@ -3,6 +3,9 @@
   <a href="https://www.npmjs.com/package/next-auth-sanity" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/next-auth-sanity.svg">
   </a>
+  <a href="https://www.npmjs.com/package/next-auth-sanity" target="_blank">
+    <img alt="npm" src="https://img.shields.io/npm/dt/next-auth-sanity">    
+  </a>
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
