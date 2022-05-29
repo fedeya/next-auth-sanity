@@ -1,6 +1,6 @@
-import { CredentialsProvider } from 'next-auth/providers';
+import type { CredentialsProvider } from 'next-auth/providers';
 import Credentials from 'next-auth/providers/credentials';
-import { SanityClient } from '@sanity/client';
+import type { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
 import argon2 from 'argon2';
 import { uuid } from '@sanity/uuid';

@@ -1,17 +1,22 @@
-import { User } from 'next-auth';
-import axios from 'axios';
+import type { User } from 'next-auth';
 
-export interface SignUpData {
+export interface SignUpPayload {
   email: string;
   password: string;
   name?: string;
   image?: string;
 }
 
-export const signUp = async (data: SignUpData) => {
-  const res = await axios.post<User>('/api/sanity/signUp', {
-    ...data
+export const signUp = async (payload: SignUpPayload): Promise<User> => {
+  const res = await fetch('/api/sanity/signUp', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
-  return res.data;
+  const user = await res.json();
+
+  return user;
 };
