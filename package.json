@@ -1,7 +1,7 @@
 {
   "name": "next-auth-sanity",
   "description": "NextAuth Adapter for Sanity",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -11,6 +11,10 @@
   "author": "Fedeya <elfedeminaya@gmail.com>",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist/*.{js,d.ts}",
+    "dist/**/*.{js,d.ts}"
+  ],
   "keywords": [
     "next-auth",
     "oauth",
