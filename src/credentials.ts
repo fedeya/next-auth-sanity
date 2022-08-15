@@ -10,7 +10,7 @@ type CredentialsConfig = ReturnType<CredentialsProvider>;
 export const signUpHandler =
   (client: SanityClient, userSchema: string = 'user') =>
   async (req: any, res: any) => {
-    const { email, password, name, image } = req.body;
+    const { email, password, name, image, ...userData } = req.body;
 
     const user = await client.fetch(getUserByEmailQuery, {
       userSchema,
@@ -22,19 +22,19 @@ export const signUpHandler =
       return;
     }
 
-    const newUser = await client.create({
+    const { password: _, ...newUser } = await client.create({
       _id: `user.${uuid()}`,
       _type: userSchema,
       email,
       password: await argon2.hash(password),
       name,
-      image
+      image,
+      ...userData
     });
 
     res.json({
-      email: newUser.email,
-      name: newUser.name,
-      image: newUser.image
+      id: newUser._id,
+      ...newUser
     });
   };
 
@@ -57,7 +57,7 @@ export const SanityCredentials = (
       }
     },
     async authorize(credentials) {
-      const user = await client.fetch(getUserByEmailQuery, {
+      const { _id, ...user } = await client.fetch(getUserByEmailQuery, {
         userSchema,
         email: credentials?.email
       });
@@ -66,10 +66,8 @@ export const SanityCredentials = (
 
       if (await argon2.verify(user.password, credentials?.password!)) {
         return {
-          email: user.email,
-          name: user.name,
-          image: user.image,
-          id: user._id
+          id: _id,
+          ...user
         };
       }
 

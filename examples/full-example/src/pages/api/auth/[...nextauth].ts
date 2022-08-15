@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GitHub from 'next-auth/providers/github';
-import { SanityAdapter, SanityCredentials } from '../../../../../../dist';
+import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
 import { client } from '../../../libs/sanity';
 
 const options: NextAuthOptions = {

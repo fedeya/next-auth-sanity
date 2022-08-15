@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useSession, signOut, signIn } from 'next-auth/react';
-import { signUp } from '../../../../dist/client';
+import { signUp } from 'next-auth-sanity/client';
 
 const Credentials: FC = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +19,8 @@ const Credentials: FC = () => {
 
     await signIn('sanity-login', {
       redirect: false,
-      email
+      email,
+      password
     });
   };
 

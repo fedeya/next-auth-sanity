@@ -1,11 +1,11 @@
 import type { User } from 'next-auth';
 
-export interface SignUpPayload {
+export type SignUpPayload = {
   email: string;
   password: string;
   name?: string;
   image?: string;
-}
+} & Record<string, any>;
 
 export const signUp = async (payload: SignUpPayload): Promise<User> => {
   const res = await fetch('/api/sanity/signUp', {
