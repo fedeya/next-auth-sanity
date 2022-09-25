@@ -64,14 +64,14 @@ const options: NextAuthOptions = {
   providers: [
     GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
-    SanityCredentials(client), // only if you use sign in with credentials
+    SanityCredentials(client) // only if you use sign in with credentials
   ],
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt'
   },
-  adapter: SanityAdapter(client),
+  adapter: SanityAdapter(client)
 };
 
 export default NextAuth(options);
@@ -89,7 +89,7 @@ import { user, account, verificationToken } from 'next-auth-sanity/schemas';
 
 export default createSchema({
   name: 'default',
-  types: schemaTypes.concat([user, account, verificationToken]),
+  types: schemaTypes.concat([user, account, verificationToken])
 });
 ```
 
@@ -106,25 +106,25 @@ export default {
     {
       name: 'name',
       title: 'Name',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'email',
       title: 'Email',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'image',
       title: 'Image',
-      type: 'url',
+      type: 'url'
     },
     {
       // this is only if you use credentials provider
       name: 'password',
       type: 'string',
-      hidden: true,
-    },
-  ],
+      hidden: true
+    }
+  ]
 };
 ```
 
@@ -138,35 +138,35 @@ export default {
   fields: [
     {
       name: 'providerType',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'providerId',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'providerAccountId',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'refreshToken',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'accessToken',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'accessTokenExpires',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'user',
       title: 'User',
       type: 'reference',
-      to: { type: 'user' },
-    },
-  ],
+      to: { type: 'user' }
+    }
+  ]
 };
 ```
 
@@ -181,19 +181,19 @@ export default {
     {
       name: 'identifier',
       title: 'Identifier',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'token',
       title: 'Token',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'expires',
       title: 'Expires',
-      type: 'date',
-    },
-  ],
+      type: 'date'
+    }
+  ]
 };
 ```
 
@@ -220,28 +220,27 @@ import { signIn } from 'next-auth/react';
 const user = await signUp({
   email,
   password,
-  name,
+  name
 });
 
 await signIn('sanity-login', {
   redirect: false,
   email,
-  password,
+  password
 });
 ```
 
 ## Custom Schemas
-
 if you want to use another schema or upgrade from previous version you can change the default schema used in the library, to do so you can pass a second argument to all methods with config
-
 ```ts
 SanityAdapter(client, {
   schemas: {
     verificationToken: 'verification-request',
     account: 'account',
-    user: 'profile',
-  },
-});
+    user: 'profile'
+  }
+})
+
 
 // the second argument is the name of the user schema
 // default: 'user'
