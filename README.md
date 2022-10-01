@@ -215,7 +215,7 @@ export default signUpHandler(client);
 
 ```ts
 import { signUp } from 'next-auth-sanity/client';
-import { signIn } from 'next-auth/client';
+import { signIn } from 'next-auth/react';
 
 const user = await signUp({
   email,
