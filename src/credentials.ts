@@ -1,11 +1,8 @@
-import type { CredentialsProvider } from 'next-auth/providers';
+import type { CredentialsConfig } from 'next-auth/providers';
 import Credentials from 'next-auth/providers/credentials';
 import type { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
-import argon2 from 'argon2';
 import { uuid } from '@sanity/uuid';
-
-type CredentialsConfig = ReturnType<CredentialsProvider>;
 
 export const signUpHandler =
   (client: SanityClient, userSchema: string = 'user') =>
@@ -21,6 +18,8 @@ export const signUpHandler =
       res.json({ error: 'User already exist' });
       return;
     }
+
+    const argon2 = await import('argon2');
 
     const { password: _, ...newUser } = await client.create({
       _id: `user.${uuid()}`,
@@ -61,6 +60,8 @@ export const SanityCredentials = (
         userSchema,
         email: credentials?.email
       });
+
+      const argon2 = await import('argon2');
 
       if (!user) throw new Error('Email does not exist');
 
