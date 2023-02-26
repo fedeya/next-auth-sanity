@@ -1,7 +1,7 @@
 {
   "name": "next-auth-sanity",
   "description": "NextAuth Adapter for Sanity",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "main": "index.js",
   "types": "index.d.ts",
   "repository": {
