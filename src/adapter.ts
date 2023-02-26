@@ -1,4 +1,4 @@
-import type { Adapter, AdapterUser } from 'next-auth/adapters';
+import type { Adapter } from 'next-auth/adapters';
 import {
   getUserByIdQuery,
   getUserByProviderAccountIdQuery,
@@ -28,6 +28,7 @@ export function SanityAdapter(
 
       return {
         id: _id,
+        // @ts-ignore
         emailVerified: null,
         ...user
       };
@@ -82,12 +83,15 @@ export function SanityAdapter(
     async deleteSession() {},
 
     async updateUser(user) {
-      const newUser = await client.patch(user.id!).set(user).commit();
+      const { _id, ...newUser } = await client
+        .patch(user.id!)
+        .set(user)
+        .commit<typeof user>();
 
       return {
-        id: newUser._id,
-        ...newUser,
-        emailVerified: null
+        id: _id,
+        emailVerified: null,
+        ...(newUser as any)
       };
     },
 

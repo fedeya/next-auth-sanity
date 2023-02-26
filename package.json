@@ -34,7 +34,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf index.js index.d.ts queries.js queries.ts queries.d.ts adapter.js adapter.ts adapter.d.ts client.js client.ts client.d.ts schemas.js schemas.ts schemas.d.ts credentials.js credentials.ts credentials.d.ts",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "postpublish": "yarn clean"
   },
   "devDependencies": {
     "@types/lru-cache": "^5.1.0",
@@ -42,11 +43,13 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@sanity/client": "^2.8.0",
     "@sanity/uuid": "^3.0.1",
     "argon2": "^0.27.2",
-    "groq": "^2.2.6",
-    "next-auth": "^4.3.2"
+    "groq": "^2.2.6"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^5.2.2",
+    "next-auth": "^4.19.2"
   },
   "bugs": {
     "url": "https://github.com/Fedeya/next-auth-sanity/issues"
