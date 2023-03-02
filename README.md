@@ -250,6 +250,101 @@ SanityCredentials(client, 'profile');
 signUpHandler(client, 'profile');
 ```
 
+## Workaround for  Module parse failed: Unexpected token
+
+With next@canary and appdir, you may experience the following error;
+
+```js
+./node_modules/@mapbox/node-pre-gyp/lib/util/nw-pre-gyp/index.html
+Module parse failed: Unexpected token (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+> <!doctype html>
+| <html>
+| <head>
+
+```
+
+This issue is caused by using argon2 which depends on node. To workaround this for the time being, split your options definitions out into 2 separate files.
+
+`baseOptions.ts`
+
+```ts
+import { NextAuthOptions } from 'next-auth';
+
+export const baseOptions: NextAuthOptions = {
+  providers: [],
+  session: {
+    strategy: 'jwt',
+  },
+  theme: {
+    colorScheme: 'light',
+    brandColor: '#0376bd',
+    ...
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      if (!user) {
+        return token;
+      }
+      token.role = user.role ?? undefined;
+      return token;
+    },
+    session({ session, user, token }) {
+      session.user.role = user?.role ?? token?.role ?? undefined;
+      return session;
+    },
+  },
+};
+```
+
+`authOptions`
+
+```ts
+// auth/authOptions.ts
+
+import { NextAuthOptions } from 'next-auth';
+import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
+import { baseOptions } from './baseOptions';
+
+export const authOptions: NextAuthOptions = {
+  ...baseOptions,
+  providers: [
+    SanityCredentials(client as any),
+  ],
+  adapter: SanityAdapter(client as any),
+};
+```
+
+And then use `authOptions` ONLY in your next-auth setup;
+
+`[...nextauth].ts`
+
+```ts
+import NextAuth from 'next-auth';
+import { authOptions } from '../../authOptions';
+
+export default NextAuth(authOptions);
+```
+
+and then the `baseOptions` everywhere else.
+
+`page.tsx`
+
+```ts
+import Manage from './manage';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@lib/auth/authOptions';
+import { baseOptions } from '@lib/auth/baseOptions';
+
+export default async function Page() {
+  const session = await getServerSession<typeof authOptions>(baseOptions);
+  ...
+}
+```
+
+`typeof authOptions` is required if you need custom types for our session or user.
+
 ## Author
 
 👤 **Fedeya <elfedeminaya@gmail.com>**
