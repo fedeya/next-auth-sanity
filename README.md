@@ -349,8 +349,8 @@ export default async function Page() {
 
 👤 **Fedeya <elfedeminaya@gmail.com>**
 
-- Website: https://fedeya.tk
-- Twitter: [@fede_minaya](https://twitter.com/fede_minaya)
+- Website: [fedeminaya.com](https://fedeminaya.com)
+- Twitter: [@fedeminaya](https://twitter.com/fedeminaya)
 - Github: [@Fedeya](https://github.com/Fedeya)
 - LinkedIn: [@federico-minaya](https://linkedin.com/in/federico-minaya)
 

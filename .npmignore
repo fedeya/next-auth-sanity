@@ -13,3 +13,4 @@ config.gypi
 CVS
 npm-debug.log
 /examples
+.github
