@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@sanity/client": "^5.2.2",
-    "native-ext-loader": "^2.3.0",
     "next": "^13.2.4-canary.2",
     "next-auth": "^4.20.1",
     "react": "^18.2.0",
