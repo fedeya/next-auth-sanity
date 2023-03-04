@@ -3,7 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import type { SanityClient } from '@sanity/client';
 import { getUserByEmailQuery } from './queries';
 import { uuid } from '@sanity/uuid';
-import argon2 from '@node-rs/argon2';
+import argon2 from 'argon2';
 
 export const signUpHandler =
   (client: SanityClient, userSchema: string = 'user') =>
