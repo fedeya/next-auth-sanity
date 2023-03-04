@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 const Home: FC = () => {

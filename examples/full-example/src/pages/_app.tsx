@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { AppProps } from 'next/app';
+import type { FC } from 'react';
+import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => (
