@@ -34,22 +34,24 @@
   resolved "https://registry.yarnpkg.com/@phc/format/-/format-1.0.0.tgz#b5627003b3216dc4362125b13f48a4daa76680e4"
   integrity sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==
 
-"@sanity/client@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-5.3.0.tgz#10a3ec770c5c17acf19c18c0f5354a1b7ab869af"
-  integrity sha512-GUu33gDy5Lx9FNyRGeRNrn2ZYNNthn3Qj2y4GPtb3MkdUtdWHKXmCi3S7nqusTshwS0Uz/w+wX9/h5Nbq9iofg==
+"@sanity/client@^5.3.2":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-5.3.2.tgz#2e85fec50bfa6f6e63646e6fe3c7309524da9afd"
+  integrity sha512-6FqAyoXJmzJMU9i6LRIqBRUs5c08zaYksy4bNdqGP+ixBW6peebGKs4sgR1vtUIIT1YapPmEWELAEqqiIlnzfA==
   dependencies:
-    "@sanity/eventsource" "^4"
-    get-it "^8"
-    rxjs "^7"
+    "@sanity/eventsource" "5"
+    get-it "8"
+    rxjs "7"
 
-"@sanity/eventsource@^4":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@sanity/eventsource/-/eventsource-4.0.0.tgz#ec9c352e87a2f79db8d25eedbb009ced21ec2e97"
-  integrity sha512-W0AD141JILOySJ177j2+HTr5k4tWNyXjGsr0dDXJzpqlwZ09J/uPHI73hMe5XtoFumPa9Bj6jy8uu2qdZX84NQ==
+"@sanity/eventsource@5":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@sanity/eventsource/-/eventsource-5.0.0.tgz#45410c8259e0bb80b4e308e1872846439590805a"
+  integrity sha512-0ewT+BDzfiamHwitUfRcwsl/RREHjWv6VNZvQ8Q4OnnNKXfEEGXbWmqzof0okOTkp4XELgyliht4Qj28o9AU2g==
   dependencies:
-    event-source-polyfill "1.0.25"
-    eventsource "^2.0.2"
+    "@types/event-source-polyfill" "1.0.1"
+    "@types/eventsource" "1.1.11"
+    event-source-polyfill "1.0.31"
+    eventsource "2.0.2"
 
 "@sanity/uuid@^3.0.1":
   version "3.0.1"
@@ -58,6 +60,16 @@
   dependencies:
     "@types/uuid" "^8.0.0"
     uuid "^8.0.0"
+
+"@types/event-source-polyfill@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/event-source-polyfill/-/event-source-polyfill-1.0.1.tgz#ffcb4ca17bc35bc1ca5d3e047fe833292bb73c32"
+  integrity sha512-dls8b0lUgJ/miRApF0efboQ9QZnAm7ofTO6P1ILu8bRPxUFKDxVwFf8+TeuuErmNui6blpltyr7+eV72dbQXlQ==
+
+"@types/eventsource@1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@types/eventsource/-/eventsource-1.1.11.tgz#a2c0bfd0436b7db42ed1b2b2117f7ec2e8478dc7"
+  integrity sha512-L7wLDZlWm5mROzv87W0ofIYeQP5K2UhoFnnUyEWLKM6UBb0ZNRgAqp98qE5DkgfBXdWfc2kYmw9KZm4NLjRbsw==
 
 "@types/lru-cache@^5.1.0":
   version "5.1.0"
@@ -185,12 +197,12 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
-event-source-polyfill@1.0.25:
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-1.0.25.tgz#d8bb7f99cb6f8119c2baf086d9f6ee0514b6d9c8"
-  integrity sha512-hQxu6sN1Eq4JjoI7ITdQeGGUN193A2ra83qC0Ltm9I2UJVAten3OFVN6k5RX4YWeCS0BoC8xg/5czOCIHVosQg==
+event-source-polyfill@1.0.31:
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-1.0.31.tgz#45fb0a6fc1375b2ba597361ba4287ffec5bf2e0c"
+  integrity sha512-4IJSItgS/41IxN5UVAVuAyczwZF7ZIEsM1XAoUzIHA6A+xzusEZUutdXz2Nr+MQPLxfTiCvqE79/C8HT8fKFvA==
 
-eventsource@^2.0.2:
+eventsource@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-2.0.2.tgz#76dfcc02930fb2ff339520b6d290da573a9e8508"
   integrity sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==
@@ -235,10 +247,10 @@ gauge@^3.0.0:
     strip-ansi "^6.0.1"
     wide-align "^1.1.2"
 
-get-it@^8:
-  version "8.0.9"
-  resolved "https://registry.yarnpkg.com/get-it/-/get-it-8.0.9.tgz#e48c1c826e6c72074907efb08094215d92ad470c"
-  integrity sha512-Nm54soj8MEXTmkzAR0iWGP/TCAfsueOOWzBTvTB9ch0ubUE/5FbV7tAptbmsYzpk9QzA6zhcadqTCwP3prRfHw==
+get-it@8:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/get-it/-/get-it-8.1.0.tgz#c3c3ae91bfceba7dcccffec09d933fd571515102"
+  integrity sha512-YKf4CbR0VQhRvAlTG7KdOhvEaKzArRmPliq3qV9iB2vOaGbp4hNUGrBhRG/IBT7LgNaNEuGIj5S+TPixxf6afw==
   dependencies:
     debug "^4.3.4"
     decompress-response "^7.0.0"
@@ -548,7 +560,7 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rxjs@^7:
+rxjs@7:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.0.tgz#90a938862a82888ff4c7359811a595e14e1e09a4"
   integrity sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==
