@@ -34,13 +34,13 @@
   resolved "https://registry.yarnpkg.com/@phc/format/-/format-1.0.0.tgz#b5627003b3216dc4362125b13f48a4daa76680e4"
   integrity sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==
 
-"@sanity/client@^5.3.2":
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-5.3.2.tgz#2e85fec50bfa6f6e63646e6fe3c7309524da9afd"
-  integrity sha512-6FqAyoXJmzJMU9i6LRIqBRUs5c08zaYksy4bNdqGP+ixBW6peebGKs4sgR1vtUIIT1YapPmEWELAEqqiIlnzfA==
+"@sanity/client@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-5.4.0.tgz#db916fee7b77abfe761be535d49e309f41057524"
+  integrity sha512-9O0zzBOcoji937610qjgDh3/5DCKGZ1w1Tsjnunq+EEdLvl0FBXiBA77an6gZ7CuqUhsjDmSi+Xn7ax28RAsvw==
   dependencies:
     "@sanity/eventsource" "5"
-    get-it "8"
+    get-it "^8.1"
     rxjs "7"
 
 "@sanity/eventsource@5":
@@ -247,10 +247,10 @@ gauge@^3.0.0:
     strip-ansi "^6.0.1"
     wide-align "^1.1.2"
 
-get-it@8:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/get-it/-/get-it-8.1.0.tgz#c3c3ae91bfceba7dcccffec09d933fd571515102"
-  integrity sha512-YKf4CbR0VQhRvAlTG7KdOhvEaKzArRmPliq3qV9iB2vOaGbp4hNUGrBhRG/IBT7LgNaNEuGIj5S+TPixxf6afw==
+get-it@^8.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/get-it/-/get-it-8.1.1.tgz#6522df2b0726a0596d8087f23063ec7f5e35ea1c"
+  integrity sha512-83P2+3V/3E+KSdlHnGlOr4vCrlV8wDsT580AyJkMtkK/8LtZc0TOCI9bjQXH1sgYnmQTzCoPoPaOAE+a8JZqLQ==
   dependencies:
     debug "^4.3.4"
     decompress-response "^7.0.0"
