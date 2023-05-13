@@ -20,6 +20,10 @@ export function SanityAdapter(
 ): Adapter {
   return {
     async createUser(profile) {
+      if (typeof profile.emailVerified === null) {
+        profile.emailVerified = new Date();
+      }
+
       const { _id, ...user } = await client.create({
         _id: `user.${uuid()}`,
         _type: options.schemas.user,
@@ -28,8 +32,6 @@ export function SanityAdapter(
 
       return {
         id: _id,
-        // @ts-ignore
-        emailVerified: null,
         ...user
       };
     },
@@ -83,6 +85,10 @@ export function SanityAdapter(
     async deleteSession() {},
 
     async updateUser(user) {
+      if (typeof user.emailVerified === null) {
+        user.emailVerified = new Date();
+      }
+
       const { _id, ...newUser } = await client
         .patch(user.id!)
         .set(user)
@@ -90,7 +96,6 @@ export function SanityAdapter(
 
       return {
         id: _id,
-        emailVerified: null,
         ...(newUser as any)
       };
     },
@@ -120,7 +125,6 @@ export function SanityAdapter(
 
       return {
         id: account.user._id,
-        emailVerified: null,
         ...account.user
       };
     },

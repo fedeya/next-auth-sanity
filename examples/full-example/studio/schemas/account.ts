@@ -27,7 +27,7 @@ export default <Document>{
     },
     {
       name: 'accessTokenExpires',
-      type: 'string'
+      type: 'number'
     },
     {
       name: 'user',
