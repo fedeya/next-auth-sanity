@@ -22,6 +22,11 @@ export const user = {
       name: 'password',
       type: 'string',
       hidden: true
+    },    
+    {
+      name: 'emailVerified',
+      type: 'datetime',
+      hidden: true,
     }
   ]
 };
@@ -53,7 +58,7 @@ export const account = {
     },
     {
       name: 'accessTokenExpires',
-      type: 'string'
+      type: 'number'
     },
     {
       name: 'user',
@@ -72,17 +77,17 @@ export const verificationToken = {
     {
       name: 'identifier',
       title: 'Identifier',
-      type: 'string'
+      type: 'string',
     },
     {
       name: 'token',
       title: 'Token',
-      type: 'string'
+      type: 'string',
     },
     {
       name: 'expires',
       title: 'Expires',
-      type: 'date'
-    }
-  ]
+      type: 'datetime',
+    },
+  ],
 };

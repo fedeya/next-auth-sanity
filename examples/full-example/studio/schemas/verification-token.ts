@@ -18,7 +18,7 @@ export default <Document>{
     {
       name: 'expires',
       title: 'Expires',
-      type: 'date'
+      type: 'datetime'
     }
   ]
 };

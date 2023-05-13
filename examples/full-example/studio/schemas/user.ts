@@ -24,6 +24,11 @@ export default <Document>{
       name: 'password',
       type: 'string',
       hidden: true
+    },    
+    {
+      name: 'emailVerified',
+      type: 'datetime',
+      hidden: true,
     }
   ]
 };

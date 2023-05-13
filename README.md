@@ -123,6 +123,11 @@ export default {
       name: 'password',
       type: 'string',
       hidden: true
+    },
+    {
+      name: 'emailVerified',
+      type: 'datetime',
+      hidden: true,
     }
   ]
 };
@@ -158,7 +163,7 @@ export default {
     },
     {
       name: 'accessTokenExpires',
-      type: 'string'
+      type: 'number'
     },
     {
       name: 'user',
@@ -191,7 +196,7 @@ export default {
     {
       name: 'expires',
       title: 'Expires',
-      type: 'date'
+      type: 'datetime'
     }
   ]
 };
