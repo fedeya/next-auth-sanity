@@ -20,18 +20,22 @@ export function SanityAdapter(
 ): Adapter {
   return {
     async createUser(profile) {
-      if (typeof profile.emailVerified === null) {
-        profile.emailVerified = new Date();
-      }
-
-      const { _id, ...user } = await client.create({
+      const { emailVerified: tempEmailVerified, ...tempProfile } = profile;
+      const {
+        _id,
+        emailVerified,
+        ...user
+      } = await client.create({
         _id: `user.${uuid()}`,
         _type: options.schemas.user,
-        ...profile
-      });
+        emailVerified:
+          tempEmailVerified === null ? undefined : tempEmailVerified,
+        ...tempProfile,
+      });      
 
       return {
         id: _id,
+        emailVerified: tempEmailVerified,
         ...user
       };
     },
@@ -85,17 +89,19 @@ export function SanityAdapter(
     async deleteSession() {},
 
     async updateUser(user) {
-      if (typeof user.emailVerified === null) {
-        user.emailVerified = new Date();
-      }
-
-      const { _id, ...newUser } = await client
+      const { id, emailVerified: tempEmailVerified, ...tempUser } = user;
+      const { _id, emailVerified, ...newUser } = await client
         .patch(user.id!)
-        .set(user)
+        .set({
+          emailVerified:
+            tempEmailVerified === null ? undefined : tempEmailVerified,
+          ...tempUser,
+        })
         .commit<typeof user>();
 
       return {
         id: _id,
+        emailVerified: tempEmailVerified,
         ...(newUser as any)
       };
     },

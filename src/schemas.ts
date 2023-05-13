@@ -22,17 +22,12 @@ export const user = {
       name: 'password',
       type: 'string',
       hidden: true
-    },
-    {
-      name: 'id',
-      type: 'string',
-      hidden: true,
-    },
+    },    
     {
       name: 'emailVerified',
       type: 'datetime',
       hidden: true,
-    },
+    }
   ]
 };
 
@@ -75,24 +70,24 @@ export const account = {
 };
 
 export const verificationToken = {
-  name: "verification-token",
-  title: "Verification Token",
-  type: "document",
+  name: 'verification-token',
+  title: 'Verification Token',
+  type: 'document',
   fields: [
     {
-      name: "identifier",
-      title: "Identifier",
-      type: "string",
+      name: 'identifier',
+      title: 'Identifier',
+      type: 'string',
     },
     {
-      name: "token",
-      title: "Token",
-      type: "string",
+      name: 'token',
+      title: 'Token',
+      type: 'string',
     },
     {
-      name: "expires",
-      title: "Expires",
-      type: "datetime",
+      name: 'expires',
+      title: 'Expires',
+      type: 'datetime',
     },
   ],
 };
