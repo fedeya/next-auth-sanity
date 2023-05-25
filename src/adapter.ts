@@ -21,17 +21,13 @@ export function SanityAdapter(
   return {
     async createUser(profile) {
       const { emailVerified: tempEmailVerified, ...tempProfile } = profile;
-      const {
-        _id,
-        emailVerified,
-        ...user
-      } = await client.create({
+      const { _id, emailVerified, ...user } = await client.create({
         _id: `user.${uuid()}`,
         _type: options.schemas.user,
         emailVerified:
           tempEmailVerified === null ? undefined : tempEmailVerified,
-        ...tempProfile,
-      });      
+        ...tempProfile
+      });
 
       return {
         id: _id,
@@ -95,7 +91,7 @@ export function SanityAdapter(
         .set({
           emailVerified:
             tempEmailVerified === null ? undefined : tempEmailVerified,
-          ...tempUser,
+          ...tempUser
         })
         .commit<typeof user>();
 

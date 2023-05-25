@@ -34,6 +34,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "dev": "tsc -w",
     "clean": "rm -rf index.js index.d.ts queries.js queries.ts queries.d.ts adapter.js adapter.ts adapter.d.ts client.js client.ts client.d.ts schemas.js schemas.ts schemas.d.ts credentials.js credentials.ts credentials.d.ts",
     "prepublishOnly": "yarn build",
     "postpublish": "yarn clean"
