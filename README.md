@@ -206,7 +206,7 @@ export default {
 
 ### Setup
 
-`API Route`
+`API Route` (with pages)
 
 ```ts
 // pages/api/sanity/signUp.ts
@@ -214,6 +214,16 @@ import { signUpHandler } from 'next-auth-sanity';
 import { client } from 'your/sanity/client';
 
 export default signUpHandler(client);
+```
+
+`Route Handler` (with app directory)
+  
+```ts
+// app/api/sanity/signUp/route.ts
+import { signUpHandler } from 'next-auth-sanity';
+import { client } from 'your/sanity/client';
+
+export const POST = signUpHandler(client);
 ```
 
 `Client`
@@ -255,35 +265,9 @@ SanityCredentials(client, 'profile');
 signUpHandler(client, 'profile');
 ```
 
-## App Directory
-
-With next@canary and appDir, you may experience the following error;
-
-```js
-./node_modules/@mapbox/node-pre-gyp/lib/util/nw-pre-gyp/index.html
-Module parse failed: Unexpected token (1:0)
-You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
-> <!doctype html>
-| <html>
-| <head>
-
-```
-
-This issue is caused by using argon2 which depends on node. To workaround this for the time being, add the next line to your `next.config.js`.
-
-```ts
-// next.config.js
-module.exports = {
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: ['argon2'],
-  }
-}
-```
-
 ## Author
 
-👤 **Fedeya <elfedeminaya@gmail.com>**
+👤 **Fedeya <hello@fedeminaya.com>**
 
 - Website: [fedeminaya.com](https://fedeminaya.com)
 - Twitter: [@fedeminaya](https://twitter.com/fedeminaya)
