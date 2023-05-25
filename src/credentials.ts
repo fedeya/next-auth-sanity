@@ -8,7 +8,11 @@ import argon2 from 'argon2';
 export const signUpHandler =
   (client: SanityClient, userSchema: string = 'user') =>
   async (req: any, res: any) => {
-    const { email, password, name, image, ...userData } = req.body;
+    const isEdge = req instanceof Request;
+
+    const body = isEdge ? await req.json() : req.body;
+
+    const { email, password, name, image, ...userData } = body;
 
     const user = await client.fetch(getUserByEmailQuery, {
       userSchema,
@@ -29,6 +33,15 @@ export const signUpHandler =
       image,
       ...userData
     });
+
+    if (isEdge) {
+      return new Response(JSON.stringify(newUser), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        status: 200
+      });
+    }
 
     res.json({
       id: newUser._id,
