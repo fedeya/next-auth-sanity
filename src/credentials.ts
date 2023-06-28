@@ -20,7 +20,18 @@ export const signUpHandler =
     });
 
     if (user) {
-      res.json({ error: 'User already exist' });
+      const response = { error: 'User already exist' };
+
+      if (isEdge) {
+        return new Response(JSON.stringify(response), {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          status: 400
+        });
+      }
+
+      res.json(response);
       return;
     }
 

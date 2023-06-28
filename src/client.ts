@@ -12,9 +12,19 @@ export const signUp = async (payload: SignUpPayload): Promise<User> => {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json; charset=UTF-8'
     }
   });
+
+  if (!res.ok) {
+    const isJson = res.headers
+      .get('Content-Type')
+      ?.includes('application/json');
+
+    const data = isJson ? await res.json() : await res.text();
+
+    throw new Error(data);
+  }
 
   const user = await res.json();
 
