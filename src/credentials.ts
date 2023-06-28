@@ -79,12 +79,14 @@ export const SanityCredentials = (
       }
     },
     async authorize(credentials) {
-      const { _id, ...user } = await client.fetch(getUserByEmailQuery, {
+      const response = await client.fetch(getUserByEmailQuery, {
         userSchema,
         email: credentials?.email
       });
 
-      if (!user) throw new Error('Email does not exist');
+      if (!response) throw new Error('Email does not exist');
+
+      const { _id, ...user } = response;
 
       if (await argon2.verify(user.password, credentials?.password!)) {
         return {
