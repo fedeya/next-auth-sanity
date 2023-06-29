@@ -40,7 +40,7 @@
     "postpublish": "yarn clean"
   },
   "devDependencies": {
-    "@sanity/client": "^6.1.2",
+    "@sanity/client": "^6.1.4",
     "@types/lru-cache": "^5.1.0",
     "@types/node": "^14.14.41",
     "next-auth": "^4.22.1",
@@ -52,7 +52,7 @@
     "groq": "^2.2.6"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.1.2",
+    "@sanity/client": "^6.1.4",
     "next-auth": "^4.22.1"
   },
   "bugs": {
