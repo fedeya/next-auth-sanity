@@ -34,10 +34,10 @@
   resolved "https://registry.yarnpkg.com/@phc/format/-/format-1.0.0.tgz#b5627003b3216dc4362125b13f48a4daa76680e4"
   integrity sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==
 
-"@sanity/client@^6.4.8":
-  version "6.4.8"
-  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-6.4.8.tgz#f64c80d764fa20b25f9504bcaacf5e4a128410e5"
-  integrity sha512-uaxBiPszd3nNgAsk6jFM1s2VRJk77dm0pZ6G1j7I15NtKmYF6MgwMFCMLIpVj7w3A29UKytfuM01QnKYbK2FlQ==
+"@sanity/client@^6.4.11":
+  version "6.4.11"
+  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-6.4.11.tgz#a3c6bf17eabf7356216ff98095fcf8baff082c25"
+  integrity sha512-A8s5odg9b8ioamKDdfrfsp5rHsE8J+BOpknw6eRtIHF5BBkNGAYdS78NdS1m3R+llHotdpyS/X2+la4YgzU5/w==
   dependencies:
     "@sanity/eventsource" "^5.0.0"
     get-it "^8.4.3"
