@@ -17,13 +17,13 @@ export const signUp = async (payload: SignUpPayload): Promise<User> => {
   });
 
   if (!res.ok) {
-    const isJson = res.headers
-      .get('Content-Type')
-      ?.includes('application/json');
-
+    const isJson = (_a = res.headers.get('Content-Type')) === null || _a === void 0 ? void 0 : _a.includes('application/json');
     const data = isJson ? await res.json() : await res.text();
-
-    throw new Error(data);
+    
+    // Check if the data is JSON and has an 'error' key, then use it as the error message.
+    const errorMessage = isJson && typeof data === 'object' && data.error ? data.error : 'Unknown error occurred';
+    
+    throw new Error(errorMessage);
   }
 
   const user = await res.json();
