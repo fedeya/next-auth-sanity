@@ -31,7 +31,7 @@ export const signUpHandler =
         });
       }
 
-      res.json(response);
+      res.status(400).json(response);
       return;
     }
 
